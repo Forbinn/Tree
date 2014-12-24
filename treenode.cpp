@@ -8,7 +8,8 @@ TreeNode::TreeNode(int type, TreeNode *parent) :
     _children()
 {
     if (_parent != NULL)
-        _parent->addChild(this);
+        if (!_parent->addChild(this))
+            _parent = NULL;
 }
 
 TreeNode::TreeNode(const std::string &name, int type, TreeNode *parent) :
@@ -19,7 +20,8 @@ TreeNode::TreeNode(const std::string &name, int type, TreeNode *parent) :
     _children()
 {
     if (_parent != NULL)
-        _parent->addChild(this);
+        if (!_parent->addChild(this))
+            _parent = NULL;
 }
 
 TreeNode::~TreeNode()
