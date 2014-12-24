@@ -4,24 +4,22 @@ TreeNode::TreeNode(int type, TreeNode *parent) :
     _name(),
     _type(type),
     _flags(TreeFlags::NoNodeFlags),
-    _parent(parent),
+    _parent(NULL),
     _children()
 {
-    if (_parent != NULL)
-        if (!_parent->addChild(this))
-            _parent = NULL;
+    if (parent != NULL)
+        _parent = parent->addChild(this) ? parent : NULL;
 }
 
 TreeNode::TreeNode(const std::string &name, int type, TreeNode *parent) :
     _name(name),
     _type(type),
     _flags(TreeFlags::NoNodeFlags),
-    _parent(parent),
+    _parent(NULL),
     _children()
 {
-    if (_parent != NULL)
-        if (!_parent->addChild(this))
-            _parent = NULL;
+    if (parent != NULL)
+        _parent = parent->addChild(this) ? parent : NULL;
 }
 
 TreeNode::~TreeNode()
