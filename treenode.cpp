@@ -32,11 +32,6 @@ TreeNode::~TreeNode()
         delete *itr;
 }
 
-TreeFlags TreeNode::flags() const
-{
-    return _flags;
-}
-
 void TreeNode::setFlags(TreeFlags flags)
 {
     _flags = flags;
@@ -74,11 +69,6 @@ bool TreeNode::moveChild(TreeNode *child)
 bool TreeNode::removeChild(TreeNode *child)
 {
     return _children.erase(child);
-}
-
-const std::set<TreeNode*>& TreeNode::children() const
-{
-    return _children;
 }
 
 const TreeNode* TreeNode::findChild(const std::string &name) const
@@ -145,16 +135,6 @@ TreeNode* TreeNode::findChildRecursively(const std::string &name, int maxDepth)
     }
 
     return NULL;
-}
-
-bool TreeNode::isLeaf() const
-{
-    return _children.empty();
-}
-
-bool TreeNode::isRoot() const
-{
-    return _parent == NULL;
 }
 
 int TreeNode::depth() const

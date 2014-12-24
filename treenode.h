@@ -24,8 +24,8 @@ public:
     };
 
 public:
-    TreeNode(int type = TreeNode::Type, TreeNode *parent = 0);
-    TreeNode(const std::string &name, int type = TreeNode::Type, TreeNode *parent = 0);
+    explicit TreeNode(int type = TreeNode::Type, TreeNode *parent = 0);
+    explicit TreeNode(const std::string &name, int type = TreeNode::Type, TreeNode *parent = 0);
     virtual ~TreeNode();
 
     inline const std::string& name() const { return _name; }
@@ -33,14 +33,14 @@ public:
 
     inline int type() const { return _type; }
 
-    TreeFlags flags() const;
+    inline TreeFlags flags() const { return _flags; }
     void setFlags(TreeFlags flags);
 
     bool addChild(TreeNode *child);
     bool moveChild(TreeNode *child);
     bool removeChild(TreeNode *child);
 
-    const std::set<TreeNode*>& children() const;
+    inline const std::set<TreeNode*>& children() const { return _children; }
     const TreeNode* findChild(const std::string &name) const;
     const TreeNode* findChildRecursively(const std::string &data, int maxDepth = -1) const;
     TreeNode* findChild(const std::string &data);
@@ -49,8 +49,8 @@ public:
     inline const TreeNode* parent() const { return _parent; }
     inline TreeNode* parent() { return _parent; }
 
-    bool isRoot() const;
-    bool isLeaf() const;
+    inline bool isRoot() const { return _children.empty(); }
+    inline bool isLeaf() const { return _parent == NULL; }
 
     int depth() const;
 
