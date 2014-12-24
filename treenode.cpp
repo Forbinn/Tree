@@ -1,6 +1,6 @@
 #include "treenode.h"
 
-TreeNode::TreeNode(TreeNode::TreeType type, TreeNode *parent) :
+TreeNode::TreeNode(int type, TreeNode *parent) :
     _name(),
     _type(type),
     _flags(TreeFlags::NoNodeFlags),
@@ -11,7 +11,7 @@ TreeNode::TreeNode(TreeNode::TreeType type, TreeNode *parent) :
         _parent->addChild(this);
 }
 
-TreeNode::TreeNode(const std::string &name, TreeNode::TreeType type, TreeNode *parent) :
+TreeNode::TreeNode(const std::string &name, int type, TreeNode *parent) :
     _name(name),
     _type(type),
     _flags(TreeFlags::NoNodeFlags),

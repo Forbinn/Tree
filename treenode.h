@@ -24,14 +24,14 @@ public:
     };
 
 public:
-    TreeNode(TreeNode::TreeType type = TreeNode::Type, TreeNode *parent = 0);
-    TreeNode(const std::string &name, TreeNode::TreeType type = TreeNode::Type, TreeNode *parent = 0);
+    TreeNode(int type = TreeNode::Type, TreeNode *parent = 0);
+    TreeNode(const std::string &name, int type = TreeNode::Type, TreeNode *parent = 0);
     virtual ~TreeNode();
 
     inline const std::string& name() const { return _name; }
     inline void setName(const std::string &name) { _name = name; }
 
-    inline TreeNode::TreeType type() const { return _type; }
+    inline int type() const { return _type; }
 
     TreeFlags flags() const;
     void setFlags(TreeFlags flags);
@@ -60,7 +60,7 @@ private:
 private:
     std::string _name;
 
-    TreeNode::TreeType _type;
+    int _type;
     TreeFlags _flags;
 
     TreeNode *_parent;
