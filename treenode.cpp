@@ -5,7 +5,8 @@ TreeNode::TreeNode(int type, TreeNode *parent) :
     _type(type),
     _flags(TreeFlags::NoNodeFlags),
     _parent(NULL),
-    _children()
+    _children(),
+    _isDestroy(false)
 {
     if (parent != NULL)
         _parent = parent->addChild(this) ? parent : NULL;
@@ -16,7 +17,8 @@ TreeNode::TreeNode(const std::string &name, int type, TreeNode *parent) :
     _type(type),
     _flags(TreeFlags::NoNodeFlags),
     _parent(NULL),
-    _children()
+    _children(),
+    _isDestroy(false)
 {
     if (parent != NULL)
         _parent = parent->addChild(this) ? parent : NULL;
@@ -24,7 +26,9 @@ TreeNode::TreeNode(const std::string &name, int type, TreeNode *parent) :
 
 TreeNode::~TreeNode()
 {
-    if (_parent != NULL)
+    _isDestroy = true;
+
+    if (_parent != NULL && !_parent->_isDestroy)
         _parent->_childDestroyed(this);
 
     std::set<TreeNode*>::const_iterator itr;

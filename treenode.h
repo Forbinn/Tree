@@ -65,6 +65,8 @@ private:
 
     TreeNode *_parent;
     std::set<TreeNode*> _children;
+
+    bool _isDestroy;
 };
 
 /*!

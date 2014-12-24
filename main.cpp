@@ -5,7 +5,7 @@
 ** Login  <leroy_v@epitech.eu>
 **
 ** Started on  Sun Dec 14 15:31:01 2014 vincent leroy
-** Last update Wed Dec 24 15:16:57 2014 vincent leroy
+** Last update Wed Dec 24 15:34:48 2014 vincent leroy
 */
 
 #include <iostream>
@@ -25,5 +25,7 @@ int main()
 
     std::cout << "This should fail: " << leaf1->addChild(node1) << std::endl;
     std::cout << "This should pass: " << root->addChild(node1) << std::endl;
+
+    delete root;
     return 0;
 }
