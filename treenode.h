@@ -20,7 +20,7 @@ public:
     enum TreeType
     {
         Type,
-        UserType
+        UserType    = 255
     };
 
 public:
@@ -49,8 +49,8 @@ public:
     inline const TreeNode* parent() const { return _parent; }
     inline TreeNode* parent() { return _parent; }
 
-    inline bool isRoot() const { return _children.empty(); }
-    inline bool isLeaf() const { return _parent == NULL; }
+    inline bool isRoot() const { return _parent == NULL; }
+    inline bool isLeaf() const { return _children.empty(); }
 
     int depth() const;
 
