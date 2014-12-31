@@ -75,66 +75,23 @@ bool TreeNode::removeChild(TreeNode *child)
     return _children.erase(child);
 }
 
-const TreeNode* TreeNode::findChild(const std::string &name) const
+std::list<TreeNode*> TreeNode::findAll(const std::string &name) const
 {
-    std::set<TreeNode*>::const_iterator itr;
-    for (itr = _children.begin(); itr != _children.end(); ++itr)
-    {
-        const TreeNode *child = *itr;
-        if (child->_name == name)
-            return child;
-    }
+    std::list<TreeNode*> children;
 
-    return NULL;
+    return _findAll(name, children);
 }
 
-const TreeNode* TreeNode::findChildRecursively(const std::string &name, int maxDepth) const
+TreeNode* TreeNode::findOne(const std::string &name) const
 {
-    if (maxDepth == 0)
-        return NULL;
+    if (_name == name)
+        return const_cast<TreeNode*>(this);
 
     std::set<TreeNode*>::const_iterator itr;
     for (itr = _children.begin(); itr != _children.end(); ++itr)
     {
-        const TreeNode *child = *itr;
-        if (child->_name == name)
-            return child;
-
-        const TreeNode *res = child->findChildRecursively(name, maxDepth - 1);
-        if (res != NULL)
-            return res;
-    }
-
-    return NULL;
-}
-
-TreeNode* TreeNode::findChild(const std::string &name)
-{
-    std::set<TreeNode*>::iterator itr;
-    for (itr = _children.begin(); itr != _children.end(); ++itr)
-    {
-        TreeNode *child = *itr;
-        if (child->_name == name)
-            return child;
-    }
-
-    return NULL;
-}
-
-TreeNode* TreeNode::findChildRecursively(const std::string &name, int maxDepth)
-{
-    if (maxDepth == 0)
-        return NULL;
-
-    std::set<TreeNode*>::iterator itr;
-    for (itr = _children.begin(); itr != _children.end(); ++itr)
-    {
-        TreeNode *child = *itr;
-        if (child->_name == name)
-            return child;
-
-        TreeNode *res = child->findChildRecursively(name, maxDepth - 1);
-        if (res != NULL)
+        TreeNode *res = (*itr)->findOne(name);
+        if (res)
             return res;
     }
 
@@ -157,4 +114,16 @@ int TreeNode::depth() const
 void TreeNode::_childDestroyed(TreeNode *child)
 {
     removeChild(child);
+}
+
+std::list<TreeNode*>& TreeNode::_findAll(const std::string &name, std::list<TreeNode*> &list) const
+{
+    if (_name == name)
+        list.push_back(const_cast<TreeNode*>(this));
+
+    std::set<TreeNode*>::const_iterator itr;
+    for (itr = _children.begin(); itr != _children.end(); ++itr)
+        (*itr)->_findAll(name, list);
+
+    return list;
 }

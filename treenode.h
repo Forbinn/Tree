@@ -2,6 +2,7 @@
 #define TREENODE_H
 
 #include <set>
+#include <list>
 #include <string>
 
 #include "treeflags.h"
@@ -41,10 +42,8 @@ public:
     bool removeChild(TreeNode *child);
 
     inline const std::set<TreeNode*>& children() const { return _children; }
-    const TreeNode* findChild(const std::string &name) const;
-    const TreeNode* findChildRecursively(const std::string &data, int maxDepth = -1) const;
-    TreeNode* findChild(const std::string &data);
-    TreeNode* findChildRecursively(const std::string &data, int maxDepth = -1);
+    std::list<TreeNode*> findAll(const std::string &name) const;
+    TreeNode* findOne(const std::string &name) const;
 
     inline const TreeNode* parent() const { return _parent; }
     inline TreeNode* parent() { return _parent; }
@@ -56,6 +55,7 @@ public:
 
 private:
     void _childDestroyed(TreeNode *child);
+    std::list<TreeNode*>& _findAll(const std::string &name, std::list<TreeNode*> &list) const;
 
 private:
     std::string _name;
@@ -202,36 +202,33 @@ private:
  */
 
 /*!
- * \fn const TreeNode* TreeNode::findChild(const std::string &name) const
- * \brief Method to find a child on this node and this node only
+ * \fn std::list<TreeNode*> TreeNode::findAll(const std::string &name) const
+ * \brief Method to find all the child with the name \a name ine the tree
  *
- * If multiple node have the same name the first one is returned\n
- * This will be improved in future version
+ * The order of the node in the list cannot be guaranteed\n
+ * The tree is traversal in pre-order i.e. the current node is checked and
+ * the children is checked after\n
+ * \n
+ * The list can contains the \a this node if the name match
  *
- * \param name The name of the node you want retreived
+ * \param name The name of the node your looking for
  *
- * \return The node with the name \a name or NULL if not found
+ * \return A list of node with the name \a name
+ *
+ * \see TreeNode::findOne()
  */
 
 /*!
- * \fn const TreeNode* TreeNode::findChildRecursively(const std::string &name, int maxDepth) const
- * \brief Method to find a child with is name in this node and all this children recursively
+ * \fn TreeNode* TreeNode::findOne(const std::string &name) const
+ * \brief Method to find only one node in the entire tree
  *
- * If multiple node have the same name the first one is returned\n
- * This will be improved in future version
+ * The order of check is the same as \ref TreeNode::findAll() i.e. pre-order
  *
- * \param name      The name of the node you want retreived
- * \param maxDepth  The maximum level where you want search (-1 for infinite depth)
+ * \param name The name of the node your looking for
  *
- * \return The node with the name \a name or NULL if not found
- */
-
-/*!
- * \overload TreeNode* TreeNode::findChild(const std::string &name)
- */
-
-/*!
- * \overload TreeNode* TreeNode::findChildRecursively(const std::string &name, int maxDepth)
+ * \return The node with the name \a name if found otherwise return false
+ *
+ * \see TreeNode::findAll()
  */
 
 /*!
