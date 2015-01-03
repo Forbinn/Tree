@@ -53,6 +53,32 @@ public:
 
     int depth() const;
 
+    template<class T>
+    void iter(void (T::*func)(TreeNode *node), T *obj) const
+    {
+        std::set<TreeNode*>::const_iterator itr;
+        for (itr = _children.begin(); itr != _children.end(); ++itr)
+        {
+            TreeNode *child = *itr;
+            (obj->*func)(child);
+
+            child->iter(func, obj);
+        }
+    }
+    template<class T>
+    void iter(void (T::*func)(TreeNode *node) const, const T *obj) const
+    {
+        std::set<TreeNode*>::const_iterator itr;
+        for (itr = _children.begin(); itr != _children.end(); ++itr)
+        {
+            TreeNode *child = *itr;
+            (obj->*func)(child);
+
+            child->iter(func, obj);
+        }
+    }
+    void iter(void (*func)(TreeNode *node)) const;
+
 private:
     void _childDestroyed(TreeNode *child);
     std::list<TreeNode*>& _findAll(const std::string &name, std::list<TreeNode*> &list) const;

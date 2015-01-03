@@ -111,6 +111,18 @@ int TreeNode::depth() const
     return max + 1;
 }
 
+void TreeNode::iter(void (*func)(TreeNode *node)) const
+{
+    std::set<TreeNode*>::const_iterator itr;
+    for (itr = _children.begin(); itr != _children.end(); ++itr)
+    {
+        TreeNode *child = *itr;
+        func(child);
+
+        child->iter(func);
+    }
+}
+
 void TreeNode::_childDestroyed(TreeNode *child)
 {
     removeChild(child);
